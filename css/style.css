@@ -5,8 +5,7 @@
  * ---------------------------------------------*/
 html {
   font-size: 65%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 *,
 *:before,
@@ -59,6 +58,14 @@ p {
 /** --------------------------------------------
  * layout 
  * ---------------------------------------------*/
+
+header {
+  text-align: center;
+  padding: 4em 4em 2em 4em;
+}
+
+
+
 section {
   width: 90%;
   /* border: 2px solid red; */
@@ -67,7 +74,32 @@ section {
   max-width: 500px;
 }
 
-section.countdown-section {
+.start-countdown-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  text-align: center;
+}
+.start-countdown-section input,
+.start-countdown-section button {
+  padding: .5em;
+}
+.start-countdown-section input {
+  padding-inline: 2em;
+}
+.start-countdown-section button {
+  background-color: rgb(181, 83, 178);
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background 150ms ease;
+  border-color: #224;
+  cursor: pointer;
+}
+.start-countdown-section button:hover {
+  color:rgb(37, 37, 76);
+  background-color: #fcf;
 }
 
 .countdown-container {

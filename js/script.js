@@ -15,7 +15,7 @@ const countdown = () => {
   const minutes = Math.floor(secondsInCurrentHour / 60);
   const secondsLeft = secondsInCurrentHour % 60;
 
-  console.log(`${days} days, ${hours} hours, ${minutes} minutes, ${secondsLeft} seconds remaining`);
+  // console.log(`${days} days, ${hours} hours, ${minutes} minutes, ${secondsLeft} seconds remaining`);
 
   document.querySelector('.digits-one').innerHTML = days
   document.querySelector('.digits-two').innerHTML = hours

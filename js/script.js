@@ -7,20 +7,24 @@ const countdown = () => {
 
   const secondsLeftTillEnd = future - currentTimeInSeconds;
 
+  if (secondsLeftTillEnd === 0 ) {
+  } else {
 
-  const days = Math.floor(secondsLeftTillEnd / 86400);
-  const secondsInCurrentDay = secondsLeftTillEnd % 86400;
-  const hours = Math.floor(secondsInCurrentDay / 3600);
-  const secondsInCurrentHour = secondsInCurrentDay % 3600;
-  const minutes = Math.floor(secondsInCurrentHour / 60);
-  const secondsLeft = secondsInCurrentHour % 60;
+    const days = Math.floor(secondsLeftTillEnd / 86400);
+    const secondsInCurrentDay = secondsLeftTillEnd % 86400;
+    const hours = Math.floor(secondsInCurrentDay / 3600);
+    const secondsInCurrentHour = secondsInCurrentDay % 3600;
+    const minutes = Math.floor(secondsInCurrentHour / 60);
+    const secondsLeft = secondsInCurrentHour % 60;
+  
+    // console.log(`${days} days, ${hours} hours, ${minutes} minutes, ${secondsLeft} seconds remaining`);
+  
+    document.querySelector('.digits-one').innerHTML = days
+    document.querySelector('.digits-two').innerHTML = hours
+    document.querySelector('.digits-three').innerHTML = minutes
+    document.querySelector('.digits-four').innerHTML = secondsLeft
+  }
 
-  // console.log(`${days} days, ${hours} hours, ${minutes} minutes, ${secondsLeft} seconds remaining`);
-
-  document.querySelector('.digits-one').innerHTML = days
-  document.querySelector('.digits-two').innerHTML = hours
-  document.querySelector('.digits-three').innerHTML = minutes
-  document.querySelector('.digits-four').innerHTML = secondsLeft
 
 };
 

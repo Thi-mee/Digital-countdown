@@ -1,13 +1,48 @@
+let intervalId = null;
 
+// Check if the user has already set a date and time and starts the countdown if so
+window.addEventListener('DOMContentLoaded', () => {
+  const mytime = localStorage.getItem('mytime')
+  if (mytime) {
+    document.querySelector('#time-date').value = mytime
+    startCountdown(mytime)
+  }
+})
 
-const countdown = () => {
+function verifyDate() {
   const mytime = document.querySelector('#time-date').value
+  if (mytime === '') {
+    document.getElementById('error-message').innerHTML = 'Please enter a date and time'
+    setTimeout(() => {
+      document.getElementById('error-message').innerHTML = ''
+    }, 2000)
+    return
+  }
+
+  if (new Date(mytime) < new Date()) {
+    document.getElementById('error-message').innerHTML = 'Please enter a date and time in the future'
+    setTimeout(() => {
+      document.getElementById('error-message').innerHTML = ''
+    }, 2000)
+    return
+  }
+  localStorage.setItem('mytime', mytime)
+  startCountdown(mytime)
+}
+
+
+const countdown = (mytime) => {
   const currentTimeInSeconds = Math.floor(Date.now() / 1000);
   const future = new Date(mytime).getTime() / 1000;
 
   const secondsLeftTillEnd = future - currentTimeInSeconds;
 
+  if (secondsLeftTillEnd < 0) {
+    clearInterval(intervalId);
+    return;
+  }
   if (secondsLeftTillEnd === 0 ) {
+    document.querySelector('#ping').play()
   } else {
 
     const days = Math.floor(secondsLeftTillEnd / 86400);
@@ -24,17 +59,35 @@ const countdown = () => {
     document.querySelector('.digits-three').innerHTML = minutes
     document.querySelector('.digits-four').innerHTML = secondsLeft
   }
-
-
 };
 
-// countdown(86400 * 3 + 3600 * 2 + 60 * 45 + 30); // Outputs: "3 days, 2 hours, 45 minutes, 30 seconds remaining"
 
-function startCountdown() {
-  setInterval(() => {
-    countdown();
+function startCountdown(mytime) {
+  intervalId = setInterval(() => {
+    countdown(mytime);
   }, 1000);
+  document.querySelector('#time-date').setAttribute('disabled', true)
+  document.querySelector('.ctab-start').setAttribute('disabled', true)
+  document.querySelector('.ctab-start').classList.toggle('active')
+  document.querySelector('.ctab-reset').classList.toggle('active')
+  document.querySelector('.ctab-reset').removeAttribute('disabled')
 }
-// setTimeout(() => {
-//   console.log('Happy Christmas!');
-// }, secondsLeft * 1000);
+
+
+function resetCountdown() {
+  localStorage.removeItem('mytime')
+  clearInterval(intervalId)
+  document.querySelector('#time-date').value = ''
+  document.querySelector('.digits-one').innerHTML = '00'
+  document.querySelector('.digits-two').innerHTML = '00'
+  document.querySelector('.digits-three').innerHTML = '00'
+  document.querySelector('.digits-four').innerHTML = '00'
+
+  document.querySelector('#time-date').removeAttribute('disabled')
+  document.querySelector('.ctab-start').removeAttribute('disabled')
+  document.querySelector('.ctab-start').classList.toggle('active')
+  document.querySelector('.ctab-reset').classList.toggle('active')
+  document.querySelector('.ctab-reset').setAttribute('disabled', true)
+}
+
+document

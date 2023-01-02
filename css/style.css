@@ -55,6 +55,61 @@ p {
   font-weight: normal;
 }
 
+
+
+/** --------------------------------------------
+ * Components 
+ * ---------------------------------------------*/
+
+ .start-countdown-section button {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background 150ms ease;
+  border-color: #224;
+  cursor: not-allowed;
+}
+.start-countdown-section button.active {
+  cursor: pointer;
+}
+
+.start-countdown-section .ctab-start.active {
+  background-color: rgb(181, 83, 178);
+  color: #fff;
+}
+.start-countdown-section .ctab-reset {
+  background-color: #444;
+  color: #aaa;
+  border: 0;
+}
+.start-countdown-section .ctab-reset.active {
+  background-color: #c66;
+  color: #fff;
+}
+.start-countdown-section button.active:hover {
+  color:rgb(37, 37, 76);
+  background-color: #fcf;
+}
+
+
+#error-message {
+  color: #c66;
+  font-size: 1.4rem;
+  text-align: center;
+  margin: 2em 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /** --------------------------------------------
  * layout 
  * ---------------------------------------------*/
@@ -87,20 +142,7 @@ section {
 .start-countdown-section input {
   padding-inline: 2em;
 }
-.start-countdown-section button {
-  background-color: rgb(181, 83, 178);
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: background 150ms ease;
-  border-color: #224;
-  cursor: pointer;
-}
-.start-countdown-section button:hover {
-  color:rgb(37, 37, 76);
-  background-color: #fcf;
-}
+
 
 .countdown-container {
   display: flex;

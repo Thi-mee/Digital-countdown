@@ -3,15 +3,18 @@ let intervalId = null;
 // Check if the user has already set a date and time and starts the countdown if so
 window.addEventListener('DOMContentLoaded', () => {
   const mytime = localStorage.getItem('mytime')
+  const title = localStorage.getItem('title')
   if (mytime) {
     document.querySelector('#time-date').value = mytime
+    document.querySelector('#counter-title').value = title
     startCountdown(mytime)
   }
 })
 
 function verifyDate() {
-  const mytime = document.querySelector('#time-date').value
-  if (mytime === '') {
+  const timeSelected = document.querySelector('#time-date').value
+  const title = document.querySelector('#counter-title').value
+  if (timeSelected === '') {
     document.getElementById('error-message').innerHTML = 'Please enter a date and time'
     setTimeout(() => {
       document.getElementById('error-message').innerHTML = ''
@@ -19,15 +22,25 @@ function verifyDate() {
     return
   }
 
-  if (new Date(mytime) < new Date()) {
+  if (new Date(timeSelected) < new Date()) {
     document.getElementById('error-message').innerHTML = 'Please enter a date and time in the future'
     setTimeout(() => {
       document.getElementById('error-message').innerHTML = ''
     }, 2000)
     return
   }
-  localStorage.setItem('mytime', mytime)
-  startCountdown(mytime)
+
+  if (title === '') {
+    document.getElementById('error-message').innerHTML = 'Please enter a title'
+    setTimeout(() => {
+      document.getElementById('error-message').innerHTML = ''
+    }, 2000)
+    return
+  }
+
+  localStorage.setItem('mytime', timeSelected)
+  localStorage.setItem('title', title)
+  startCountdown(timeSelected)
 }
 
 
@@ -40,11 +53,10 @@ const countdown = (mytime) => {
   if (secondsLeftTillEnd < 0) {
     clearInterval(intervalId);
     return;
-  }
-  if (secondsLeftTillEnd === 0 ) {
-    document.querySelector('#ping').play()
   } else {
-
+    if (secondsLeftTillEnd === 0) {
+      document.querySelector('#ping').play()
+    }
     const days = Math.floor(secondsLeftTillEnd / 86400);
     const secondsInCurrentDay = secondsLeftTillEnd % 86400;
     const hours = Math.floor(secondsInCurrentDay / 3600);
@@ -59,18 +71,31 @@ const countdown = (mytime) => {
     document.querySelector('.digits-three').innerHTML = minutes
     document.querySelector('.digits-four').innerHTML = secondsLeft
   }
+  
 };
 
 
 function startCountdown(mytime) {
+  
   intervalId = setInterval(() => {
     countdown(mytime);
   }, 1000);
+  
+
+  
+  
+  const countTitleInput = document.querySelector('#counter-title')
+  const countTitleDisplay = document.querySelector('.countdown-title')
+
+  countTitleInput.setAttribute('disabled', true)
   document.querySelector('#time-date').setAttribute('disabled', true)
   document.querySelector('.ctab-start').setAttribute('disabled', true)
   document.querySelector('.ctab-start').classList.toggle('active')
   document.querySelector('.ctab-reset').classList.toggle('active')
   document.querySelector('.ctab-reset').removeAttribute('disabled')
+
+
+  countTitleDisplay.innerHTML = countTitleInput.value;
 }
 
 
@@ -83,6 +108,7 @@ function resetCountdown() {
   document.querySelector('.digits-three').innerHTML = '00'
   document.querySelector('.digits-four').innerHTML = '00'
 
+  document.querySelector('#counter-title').removeAttribute('disabled')
   document.querySelector('#time-date').removeAttribute('disabled')
   document.querySelector('.ctab-start').removeAttribute('disabled')
   document.querySelector('.ctab-start').classList.toggle('active')
